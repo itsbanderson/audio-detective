@@ -13,11 +13,11 @@ def generate_transcode(indir, outdir, bitrate):
     os.chdir(tmpdir)
     for track in glob.glob("*.mp3"):
         outputfile = os.path.join(outdir, ".".join(track.split(".")[:-1]) + ".flac")
-        #call(["ffmpeg", "-loglevel", "0", "-i", track, outputfile]) 
+        call(["ffmpeg", "-loglevel", "0", "-i", track, outputfile]) 
 
     call(["rm", "-r", tmpdir])
 
-if __name__ == "__main__":
+def main():
     relindir = sys.argv[1]
     reloutdir = sys.argv[2]
     bit = sys.argv[3]
@@ -33,3 +33,6 @@ if __name__ == "__main__":
         indir = os.path.join(path, relindir)
         outdir = os.path.join(path, reloutdir)
         generate_transcode(indir, outdir, bit)
+
+if __name__ == "__main__":
+    main()

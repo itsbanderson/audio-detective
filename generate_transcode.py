@@ -20,7 +20,10 @@ def generate_transcode(indir, outdir, bitrate):
 def main():
     relindir = sys.argv[1]
     reloutdir = sys.argv[2]
-    bit = sys.argv[3]
+    if len(sys.argv) > 3:
+        bit = sys.argv[3]
+    else:
+        bit = "all"
     path = os.getcwd()
 
     if bit == "all":

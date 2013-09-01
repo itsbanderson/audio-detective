@@ -52,7 +52,7 @@ def get_spectrogram(filename, fft_length):
         audio.append(freq.sum())
         audionorm.append(freq.sum() / n_out_pts)
 
-    plt.plot(axis, audionorm)
+    #plt.plot(axis, audionorm)
 
     window = [-1, 0, 1]
     slope = np.convolve(audio, window, mode='same') / np.convolve(range((fft_length / 2) + 1), window, mode='same')
@@ -63,8 +63,8 @@ def get_spectrogram(filename, fft_length):
         slopes.append(point)
         slopenorm.append(point / n_out_pts)
 
-    plt.plot(axis, slopenorm)
-    plt.show()
+    #plt.plot(axis, slopenorm)
+    #plt.show()
 
     highfreq = 0
     for hz in axis_hz:
@@ -80,14 +80,18 @@ def get_spectrogram(filename, fft_length):
         if slopespart[i] > slopespart[i + 1] and slopespart[i + 1] < slopespart[i + 2] and slopespart[i + 1] < -10:
             localminima.append(slopespart[i + 1])
 
+    if len(localminima) < 1:
+        return "xxxxx"
+
     last = slopenorm.index(localminima[-1]) * freqinc
     if last > 20500:
         last = slopenorm.index(localminima[-2]) * freqinc
 
     lastround = round(last / 500) * 500
     bitfreqs = {20000: '320', 19500: '256', 19000: 'v0', 18500: '192', 18000: 'v2', 16500: '128'}
-    print last, lastround
-    print "Best guess at source quality: " + bitfreqs[lastround]
+    #print last, lastround
+    #print "Best guess at source quality: " + bitfreqs[lastround]
+    return str(int(lastround)) + " - " + str(int(last))
 
 if __name__ == "__main__":
     filename = sys.argv[1]

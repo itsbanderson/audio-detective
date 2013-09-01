@@ -8,7 +8,7 @@ def generate_transcode(indir, outdir, bitrate):
     os.chdir(indir)
     for track in glob.glob("*.flac"):
         outputfile = os.path.join(tmpdir, ".".join(track.split(".")[:-1]) + ".mp3")
-        call(["ffmpeg", "-loglevel", "0", "-i", track, "-b", bitrate, "-y", outputfile]) 
+        call(["ffmpeg", "-loglevel", "0", "-i", track, "-ab", bitrate + "k", "-y", outputfile]) 
 
     os.chdir(tmpdir)
     for track in glob.glob("*.mp3"):
